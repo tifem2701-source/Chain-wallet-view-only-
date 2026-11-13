@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0B4FFF">
+<title>Chain Wallet · View Only</title>
+<style>
+:root{
+  --blue:#0B4FFF;
+  --blue-dark:#062FA8;
+  --blue-soft:#E9EFFF;
+  --ink:#0B1B3A;
+  --muted:#66739A;
+  --white:#ffffff;
+  --line:#DDE5F7;
+  --radius:18px;
+  --shadow:0 10px 28px rgba(11,79,255,.12);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  color:var(--ink);
+  background:#F3F6FF;
+  min-height:100vh;
+  padding-bottom:36px;
+}
+/* ---------- BANNER ---------- */
+.banner{
+  background:linear-gradient(135deg,#0B4FFF 0%,#0637C9 100%);
+  padding:18px 16px 26px;
+  border-radius:0 0 26px 26px;
+  box-shadow:0 8px 24px rgba(6,55,201,.28);
+  position:relative;
+  overflow:hidden;
+}
+.banner::after{
+  content:"";
+  position:absolute;
+  width:220px;height:220px;
+  border-radius:50%;
+  background:rgba(255,255,255,.08);
+  top:-120px;right:-70px;
+}
+.banner-inner{max-width:460px;margin:0 auto;position:relative;z-index:1}
+.brand{display:flex;align-items:center;gap:12px}
+.logo{
+  width:42px;height:42px;border-radius:13px;
+  background:var(--white);
+  color:var(--blue);
+  display:flex;align-items:center;justify-content:center;
+  font-size:22px;font-weight:800;
+  box-shadow:0 4px 12px rgba(0,0,0,.15);
+}
+.brand-title{color:#fff;font-size:16px;font-weight:700;letter-spacing:.2px}
+.brand-sub{color:rgba(255,255,255,.78);font-size:12px;margin-top:2px}
+.badge{
+  margin-left:auto;
+  background:rgba(255,255,255,.16);
+  border:1px solid rgba(255,255,255,.45);
+  color:#fff;
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:1.2px;
+  padding:6px 10px;
+  border-radius:999px;
+  white-space:nowrap;
+}
+/* ---------- LAYOUT ---------- */
+.wrap{max-width:460px;margin:0 auto;padding:0 16px}
+.card{
+  background:var(--white);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  padding:18px;
+}
+/* ---------- BALANCE ---------- */
+.balance-card{margin-top:-16px;position:relative;z-index:2}
+.card-label{
+  font-size:11px;letter-spacing:1.4px;font-weight:800;
+  color:var(--muted);text-transform:uppercase;
+}
+.balance{
+  font-size:38px;font-weight:800;letter-spacing:-1px;
+  color:var(--blue);margin:8px 0 2px;
+  line-height:1.05;
+}
+.balance small{font-size:17px;font-weight:700;color:var(--blue-dark)}
+.balance-note{font-size:12px;color:var(--muted)}
+/* ---------- DEPOSIT ---------- */
+.deposit{
+  margin-top:14px;
+  background:var(--blue-soft);
+  border-radius:14px;
+  padding:14px 16px;
+  display:flex;align-items:center;gap:12px;
+}
+.deposit-icon{
+  width:38px;height:38px;border-radius:12px;
+  background:var(--blue);color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  font-size:18px;font-weight:800;
+  flex:0 0 auto;
+}
+.deposit-label{font-size:12px;color:var(--muted);font-weight:600}
+.deposit-value{font-size:18px;font-weight:800;color:var(--ink);margin-top:2px}
+/* ---------- ADDRESS ---------- */
+.section{margin-top:14px}
+.address-row{
+  display:flex;align-items:center;gap:10px;
+  background:#F7F9FF;
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:12px 12px;
+  margin-top:10px;
+}
+.address-text{
+  font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  font-size:12.5px;
+  color:var(--ink);
+  word-break:break-all;
+  line-height:1.5;
+  flex:1;
+}
+.copy-btn{
+  flex:0 0 auto;
+  background:var(--white);
+  border:1px solid var(--blue);
+  color:var(--blue);
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:.6px;
+  padding:8px 12px;
+  border-radius:10px;
+  cursor:pointer;
+}
+.copy-btn:active{background:var(--blue-soft)}
+/* ---------- ACTION ---------- */
+.actions{margin-top:16px}
+.btn-primary{
+  width:100%;
+  border:0;
+  border-radius:14px;
+  background:linear-gradient(135deg,#0B4FFF 0%,#0637C9 100%);
+  color:#fff;
+  font-size:16px;
+  font-weight:700;
+  letter-spacing:.3px;
+  padding:16px;
+  cursor:pointer;
+  box-shadow:0 10px 22px rgba(11,79,255,.32);
+  display:flex;align-items:center;justify-content:center;gap:8px;
+}
+.btn-primary:active{transform:translateY(1px);box-shadow:0 6px 14px rgba(11,79,255,.3)}
+.btn-primary[disabled]{opacity:.55;box-shadow:none}
+.hint{
+  text-align:center;
+  font-size:11.5px;
+  color:var(--muted);
+  margin-top:10px;
+  line-height:1.6;
+}
+/* ---------- FOOTER ---------- */
+.foot{
+  text-align:center;
+  font-size:11px;
+  color:#93A0C0;
+  margin-top:22px;
+  line-height:1.7;
+}
+/* ---------- SHEET ---------- */
+.overlay{
+  position:fixed;inset:0;
+  background:rgba(8,22,58,.5);
+  backdrop-filter:blur(2px);
+  opacity:0;pointer-events:none;
+  transition:opacity .22s ease;
+  z-index:50;
+}
+.overlay.show{opacity:1;pointer-events:auto}
+.sheet{
+  position:fixed;left:0;right:0;bottom:0;
+  background:#fff;
+  border-radius:22px 22px 0 0;
+  padding:20px 20px calc(20px + env(safe-area-inset-bottom));
+  transform:translateY(105%);
+  transition:transform .28s cubic-bezier(.22,.9,.3,1);
+  z-index:51;
+  max-width:460px;
+  margin:0 auto;
+}
+.sheet.show{transform:translateY(0)}
+.sheet-handle{
+  width:44px;height:5px;border-radius:99px;
+  background:#D8E1F5;margin:0 auto 16px;
+}
+.sheet h3{margin:0 0 4px;font-size:17px;color:var(--ink)}
+.sheet p.sub{margin:0 0 16px;font-size:12.5px;color:var(--muted)}
+.field{margin-bottom:12px}
+.field label{
+  display:block;font-size:11px;font-weight:800;
+  letter-spacing:1px;text-transform:uppercase;
+  color:var(--muted);margin-bottom:6px;
+}
+.field input{
+  width:100%;
+  border:1px solid var(--line);
+  background:#F7F9FF;
+  border-radius:12px;
+  padding:14px;
+  font-size:15px;
+  color:var(--ink);
+  outline:none;
+  font-family:inherit;
+}
+.field input:focus{border-color:var(--blue);background:#fff;box-shadow:0 0 0 3px rgba(11,79,255,.12)}
+.sheet-close{
+  width:100%;border:1px solid var(--line);background:#fff;color:var(--muted);
+  font-size:14px;font-weight:700;padding:14px;border-radius:12px;margin-top:4px;cursor:pointer;
+}
+/* ---------- TOAST ---------- */
+.toast{
+  position:fixed;
+  left:50%;bottom:32px;
+  transform:translate(-50%,20px);
+  background:#0B1B3A;
+  color:#fff;
+  font-size:13px;
+  font-weight:600;
+  padding:12px 18px;
+  border-radius:12px;
+  opacity:0;
+  pointer-events:none;
+  transition:all .25s ease;
+  z-index:80;
+  max-width:88vw;
+  text-align:center;
+  line-height:1.5;
+}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+</style>
+</head>
+<body>
+
+<!-- ================= BANNER ================= -->
+<header class="banner">
+  <div class="banner-inner">
+    <div class="brand">
+      <div class="logo">&#11041;</div>
+      <div>
+        <div class="brand-title">Chain Wallet</div>
+        <div class="brand-sub">Read-only account access</div>
+      </div>
+      <div class="badge">VIEW ONLY</div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ================= BALANCE ================= -->
+  <section class="card balance-card">
+    <div class="card-label">Total balance</div>
+    <div class="balance">$2,600,000<small>.00</small></div>
+    <div class="balance-note">Available on-chain · USD valuation</div>
+
+    <div class="deposit">
+      <div class="deposit-icon">&#8595;</div>
+      <div>
+        <div class="deposit-label">Deposit received</div>
+        <div class="deposit-value">$47,000.00</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= ADDRESS ================= -->
+  <section class="card section">
+    <div class="card-label">Wallet address</div>
+    <div class="address-row">
+      <div class="address-text" id="walletAddress">7282892872772i81817177171</div>
+      <button class="copy-btn" id="copyBtn" type="button">COPY</button>
+    </div>
+  </section>
+
+  <!-- ================= ACTION ================= -->
+  <section class="actions">
+    <button class="btn-primary" id="transferBtn" type="button">
+      <span>&#8644;</span> Transfer
+    </button>
+    <div class="hint">
+      This wallet is <strong>view only</strong>. Balances are read from the chain
+      and cannot be moved from this device.
+    </div>
+  </section>
+
+  <div class="foot">
+    Chain Wallet · View Only Mode<br>
+    Demo interface · figures are simulated
+  </div>
+</main>
+
+<!-- ================= TRANSFER SHEET ================= -->
+<div class="overlay" id="overlay"></div>
+
+<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
+  <div class="sheet-handle"></div>
+  <h3 id="sheetTitle">Transfer</h3>
+  <p class="sub">View-only wallet · outgoing transfers are disabled</p>
+
+  <div class="field">
+    <label for="toAddr">Recipient address</label>
+    <input id="toAddr" type="text" inputmode="text" placeholder="Enter address" autocomplete="off">
+  </div>
+
+  <div class="field">
+    <label for="amount">Amount (USD)</label>
+    <input id="amount" type="number" inputmode="decimal" placeholder="0.00" min="0" step="0.01">
+  </div>
+
+  <button class="btn-primary" id="confirmBtn" type="button">Confirm transfer</button>
+  <button class="sheet-close" id="closeBtn" type="button">Cancel</button>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function () {
+  "use strict";
+
+  var WALLET_ADDRESS = "7282892872772i81817177171";
+
+  var overlay    = document.getElementById("overlay");
+  var sheet      = document.getElementById("sheet");
+  var toast      = document.getElementById("toast");
+  var copyBtn    = document.getElementById("copyBtn");
+  var transferBtn= document.getElementById("transferBtn");
+  var confirmBtn = document.getElementById("confirmBtn");
+  var closeBtn   = document.getElementById("closeBtn");
+  var toAddr     = document.getElementById("toAddr");
+  var amount     = document.getElementById("amount");
+  var toastTimer = null;
+
+  /* ---------- toast ---------- */
+  function showToast(msg) {
+    toast.textContent = msg;
+    toast.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () {
+      toast.classList.remove("show");
+    }, 2600);
+  }
+
+  /* ---------- copy address ---------- */
+  function legacyCopy(text) {
+    var ta = document.createElement("textarea");
+    ta.value = text;
+    ta.setAttribute("readonly", "");
+    ta.style.position = "fixed";
+    ta.style.top = "-1000px";
+    ta.style.opacity = "0";
+    document.body.appendChild(ta);
+    ta.select();
+    ta.setSelectionRange(0, ta.value.length);
+    var ok = false;
+    try { ok = document.execCommand("copy"); } catch (e) { ok = false; }
+    document.body.removeChild(ta);
+    return ok;
+  }
+
+  copyBtn.addEventListener("click", function () {
+    var text = WALLET_ADDRESS;
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function () {
+        showToast("Wallet address copied");
+      }).catch(function () {
+        showToast(legacyCopy(text) ? "Wallet address copied" : "Copy failed — select manually");
+      });
+    } else {
+      showToast(legacyCopy(text) ? "Wallet address copied" : "Copy failed — select manually");
+    }
+  });
+
+  /* ---------- open / close sheet ---------- */
+  function openSheet() {
+    overlay.classList.add("show");
+    sheet.classList.add("show");
+  }
+
+  function closeSheet() {
+    overlay.classList.remove("show");
+    sheet.classList.remove("show");
+  }
+
+  transferBtn.addEventListener("click", openSheet);
+  closeBtn.addEventListener("click", closeSheet);
+  overlay.addEventListener("click", closeSheet);
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") closeSheet();
+  });
+
+  /* ---------- confirm (always blocked: view only) ---------- */
+  confirmBtn.addEventListener("click", function () {
+    var to = toAddr.value.trim();
+    var amt = amount.value.trim();
+
+    if (!to) {
+      showToast("Enter a recipient address");
+      toAddr.focus();
+      return;
+    }
+    if (!amt || Number(amt) <= 0) {
+      showToast("Enter a valid amount");
+      amount.focus();
+      return;
+    }
+
+    confirmBtn.disabled = true;
+    confirmBtn.textContent = "Checking…";
+
+    setTimeout(function () {
+      confirmBtn.disabled = false;
+      confirmBtn.textContent = "Confirm transfer";
+      closeSheet();
+      showToast("View-only wallet — transfers are disabled.");
+    }, 900);
+  });
+
+})();
+</script>
+</body>
+</html>
